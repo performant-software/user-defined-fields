@@ -2,7 +2,7 @@ require 'rails/generators/active_record'
 
 module UserDefinedFields
   module Generators
-    class InstallGenerator < Rails::Generators::Base
+    class AddGenerator < Rails::Generators::Base
       # Includes
       include ActiveRecord::Generators::Migration
 
@@ -14,8 +14,8 @@ module UserDefinedFields
 
       def copy_migration
         migration_template(
-          'install.rb',
-          "db/migrate/install_user_defined_fields_on_#{model_name}.rb",
+          'add.rb',
+          "db/migrate/add_user_defined_fields_to_#{model_name}.rb",
           migration_version: migration_version,
           model_name: model_name
         )
