@@ -1,5 +1,5 @@
 module UserDefinedFields
-  class ApplicationController < Api::ResourceController
+  class ApplicationController < UserDefinedFields.config.base_controller_class.constantize
     def current_user
       return super if defined?(super)
 
