@@ -49,6 +49,18 @@ class AddUserDefinedFieldsToMyModel < ActiveRecord::Migration[7.0]
 end
 ```
 
+### Models
+Models that include the `UserDefinedFields::Fieldable` concern will be treated as the models that store the user defined data. The will be available in the dropdown list when configuring user defined fields.
+
+Applications that define user defined fields at the model level should call `resolve_defineable` class method with a lambda function that returns the `defineable` model.
+```ruby
+class MyModel < ApplicationRecord
+  include UserDefinedFields::Fieldable
+  
+  resolve_defineable -> (my_model) { my_model.parent }
+end
+```
+
 ### Components
 
 User defined fields can be configured one of two ways: At the application level, or at the model level.
