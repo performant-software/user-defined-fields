@@ -53,11 +53,29 @@ end
 Models that include the `UserDefinedFields::Fieldable` concern will be treated as the models that store the user defined data. The will be available in the dropdown list when configuring user defined fields.
 
 Applications that define user defined fields at the model level should call `resolve_defineable` class method with a lambda function that returns the `defineable` model.
+
 ```ruby
 class MyModel < ApplicationRecord
   include UserDefinedFields::Fieldable
   
   resolve_defineable -> (my_model) { my_model.parent }
+end
+```
+
+### Serializers
+To include the `user_defined_fields` array as a set of nested attributes, include the `UserDefinedFields::DefineableSerializer` in the serializer for whatever model the user defined fields belong to. This is only necessary for fields defined at the model level.
+
+```ruby
+class ParentModelSerializer < BaseSerializer
+  include UserDefinedFields::DefineableSerializer
+end
+```
+
+To include the `user_defined` hash as an attribute, include the `UserDefinedFields::FieldableSerializer` in the model serializer.
+
+```ruby
+class MyModelSerializer < BaseSerializer
+  include UserDefinedFields::FieldableSerializer
 end
 ```
 
