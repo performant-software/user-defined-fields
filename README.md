@@ -49,6 +49,17 @@ class AddUserDefinedFieldsToMyModel < ActiveRecord::Migration[7.0]
 end
 ```
 
+### Controllers
+Each individual field can be configured to be searchable or non-searchable. A searchable field will be included in the query when a user provides the "search" parameter on the API request.
+
+Behind the scenes, this uses the PostgreSQL `jsonb` query syntax to build the SQL used to find the record. For performance reasons, it's important that the GIN index be created on the `user_defined` field (explained above) and that the `user_defined` field doesn't contain nested objects.
+
+```ruby
+class MyModelController < ApplicationController
+  include UserDefinedFields::Queryable
+end
+```
+
 ### Models
 Models that include the `UserDefinedFields::Fieldable` concern will be treated as the models that store the user defined data. The will be available in the dropdown list when configuring user defined fields.
 
@@ -79,7 +90,7 @@ class MyModelSerializer < BaseSerializer
 end
 ```
 
-### Components
+### Project Architecture
 
 User defined fields can be configured one of two ways: At the application level, or at the model level.
 
@@ -88,22 +99,10 @@ If configured at the application level, each record in the specified table will 
 
 For example: You could define `first_name` and `last_name` fields for all of the `people` records. Anytime a user is editing a a person form, the `first_name` and `last_name` fields will be available as inputs.
 
-```jsx
-<UserDefinedFieldsList />
-```
-
 ##### Model Level
 If configured at the model level, records can contain different fields dependent on a parent record.
 
 For example: You could define a `location` field for `resources` that belong to Project A, then define a `project_stage` field for `resources` that belong to Project B. On the edit for for Project A, only the `location` field will be available. On the edit form for Project B, only the `project_stage` field will be available.
-
-```jsx
-<UserDefinedFieldsEmbeddedList
-  items={props.item.user_defined_fields}
-  onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
-  onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
-/>
-```
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
