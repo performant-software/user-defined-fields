@@ -1,12 +1,11 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.4.2'
+
+gem 'sqlite3'
+
+gem 'sprockets-rails'
 
 # Specify your gem's dependencies in user_defined_fields.gemspec.
 gemspec
-
-gem "sqlite3"
-
-gem "sprockets-rails"
-
-# Start debugger with binding.b [https://github.com/ruby/debug]
-# gem "debug", ">= 1.0.0"

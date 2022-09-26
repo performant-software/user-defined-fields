@@ -21,16 +21,22 @@ $ gem install user_defined_fields
 ## Usage
 
 #### Migrations
+To install the database table necessary to support user defined fields, use the following command:
+
+```bash
+bundle exec rails user_defined_fields:install:migrations
+```
+
 To install the `user_defined` column on a model, use the following command:
 
 ```bash
-bundle exec rails generate user_defined_fields:install my_model
+bundle exec rails generate user_defined_fields:add my_model
 ```
 
 This will generate the following migration:
 
 ```ruby
-class InstallUserDefinedFieldsOnMyModel < ActiveRecord::Migration[7.0]
+class AddUserDefinedFieldsToMyModel < ActiveRecord::Migration[7.0]
   def up
     add_column :my_model, :user_defined, :jsonb, default: {}
     add_index :my_model, :user_defined, using: :gin
