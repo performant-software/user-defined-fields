@@ -1,7 +1,7 @@
 module UserDefinedFields
   class DatabaseController < ApplicationController
     def data_types
-      data_types = %w(Boolean Date Number Select String Text)
+      data_types = %w(Boolean Date Number RichText Select String Text)
       render json: { data_types: data_types }, status: :ok
     end
 
