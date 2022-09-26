@@ -1,8 +1,7 @@
 module UserDefinedFields
   class DatabaseController < ApplicationController
     def data_types
-      data_types = %w(Boolean Date Number RichText Select String Text)
-      render json: { data_types: data_types }, status: :ok
+      render json: { data_types: UserDefinedField::DATA_TYPES.values }, status: :ok
     end
 
     def tables

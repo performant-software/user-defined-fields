@@ -7,11 +7,19 @@ module UserDefinedFields
         @resolve_defineable = lambda unless lambda.nil?
         @resolve_defineable
       end
+
+      def search_fieldable(name, search)
+        where("user_defined->>'#{name}' ILIKE ?", "%#{search}%")
+      end
+
+      def where_fieldable(name, value)
+        where("user_defined->>'#{name}' = ?", value)
+      end
     end
 
     included do
       # Resourceable parameters
-      allow_params :user_defined
+      allow_params user_defined: {}
 
       # Validations
       validate :validate_user_defined_fields
