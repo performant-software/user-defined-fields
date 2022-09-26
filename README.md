@@ -49,6 +49,17 @@ class AddUserDefinedFieldsToMyModel < ActiveRecord::Migration[7.0]
 end
 ```
 
+### Controllers
+Each individual field can be configured to be searchable or non-searchable. A searchable field will be included in the query when a user provides the "search" parameter on the API request.
+
+Behind the scenes, this uses the PostgreSQL `jsonb` query syntax to build the SQL used to find the record. For performance reasons, it's important that the GIN index be created on the `user_defined` field (explained above) and that the `user_defined` field doesn't contain nested objects.
+
+```ruby
+class MyModelController < ApplicationController
+  include UserDefinedFields::Queryable
+end
+```
+
 ### Models
 Models that include the `UserDefinedFields::Fieldable` concern will be treated as the models that store the user defined data. The will be available in the dropdown list when configuring user defined fields.
 
