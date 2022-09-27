@@ -1,3 +1,4 @@
+require "user_defined_fields/configuration"
 require "user_defined_fields/version"
 require "user_defined_fields/engine"
 

@@ -49,6 +49,13 @@ class AddUserDefinedFieldsToMyModel < ActiveRecord::Migration[7.0]
 end
 ```
 
+### Routes
+The user defined field routes can be added by mounting the engine in `routes.rb`:
+
+```ruby
+mount UserDefinedFields::Engine, at: '/user_defined_fields'
+```
+
 ### Controllers
 Each individual field can be configured to be searchable or non-searchable. A searchable field will be included in the query when a user provides the "search" parameter on the API request.
 
