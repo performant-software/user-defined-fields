@@ -43,8 +43,7 @@ module UserDefinedFields
           next unless field.required?
 
           # Parse the user defined field and extract the value
-          json = JSON.parse(self.user_defined || '{}')
-          value = json[field.column_name]
+          value = self.user_defined[field.column_name] if self.user_defined.present?
 
           # Add an error if the value is "empty"
           next unless value.nil? ||
