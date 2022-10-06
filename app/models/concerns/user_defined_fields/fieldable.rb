@@ -27,9 +27,10 @@ module UserDefinedFields
       private
 
       def validate_user_defined_fields
-        defineable = self.class.resolve_defineable&.call(self)
+        query = UserDefinedField
+                  .where(table_name: self.class.to_s)
 
-        query = UserDefinedField.all
+        defineable = self.class.resolve_defineable&.call(self)
 
         if defineable
           query = query.where(
