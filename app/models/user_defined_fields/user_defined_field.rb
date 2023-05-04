@@ -6,6 +6,9 @@ module UserDefinedFields
     # Resourceable parameters
     allow_params :table_name, :column_name, :data_type, :required, :searchable, :allow_multiple, :order, options: []
 
+    # Validations
+    validates :order, numericality: { only_integer: true }
+
     # Constants
     DATA_TYPES = {
       boolean: 'Boolean',
