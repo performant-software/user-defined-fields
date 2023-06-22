@@ -16,6 +16,7 @@ module UserDefinedFields
         user_defined_field = UserDefinedField.find_by(
           defineable_id: params[:defineable_id],
           defineable_type: params[:defineable_type],
+          table_name: item_class.to_s,
           column_name: sort_by
         )
 
@@ -39,6 +40,7 @@ module UserDefinedFields
         fields_query = UserDefinedField.where({
           defineable_id: params[:defineable_id],
           defineable_type: params[:defineable_type],
+          table_name: item_class.to_s,
           searchable: true
         })
 
