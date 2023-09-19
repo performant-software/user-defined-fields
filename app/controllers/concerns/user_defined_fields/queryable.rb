@@ -59,7 +59,11 @@ module UserDefinedFields
           end
         end
 
-        query.or(or_query)
+        if query == item_class.all
+          query.merge(or_query)
+        else
+          query.or(or_query)
+        end
       end
 
       private
