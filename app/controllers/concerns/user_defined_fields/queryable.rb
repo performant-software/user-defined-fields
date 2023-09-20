@@ -23,14 +23,15 @@ module UserDefinedFields
         return query if user_defined_field.nil?
 
         table_alias = table_name(user_defined_field.table_name)
+        uuid = user_defined_field.uuid
 
         case user_defined_field.data_type
         when UserDefinedField::DATA_TYPES[:date]
-          query.order(Arel.sql("(#{table_alias}.user_defined->>'#{sort_by}')::TIMESTAMPTZ #{sort_direction}"))
+          query.order(Arel.sql("(#{table_alias}.user_defined->>'#{uuid}')::TIMESTAMPTZ #{sort_direction}"))
         when UserDefinedField::DATA_TYPES[:number]
-          query.order(Arel.sql("(#{table_alias}.user_defined->>'#{sort_by}')::DECIMAL #{sort_direction}"))
+          query.order(Arel.sql("(#{table_alias}.user_defined->>'#{uuid}')::DECIMAL #{sort_direction}"))
         else
-          query.order(Arel.sql("#{table_alias}.user_defined->>'#{sort_by}' #{sort_direction}"))
+          query.order(Arel.sql("#{table_alias}.user_defined->>'#{uuid}' #{sort_direction}"))
         end
       end
 
@@ -44,13 +45,13 @@ module UserDefinedFields
           searchable: true
         })
 
-        fields = fields_query.pluck(:table_name, :column_name)
+        fields = fields_query.pluck(:table_name, :uuid)
         return query if fields.size == 0
 
         or_query = nil
 
-        fields.each do |table, name|
-          attribute_query = item_class.where("#{table_name(table)}.user_defined->>'#{name}' ILIKE ?", "%#{params[:search]}%")
+        fields.each do |table, uuid|
+          attribute_query = item_class.where("#{table_name(table)}.user_defined->>'#{uuid}' ILIKE ?", "%#{params[:search]}%")
 
           if or_query.nil?
             or_query = attribute_query

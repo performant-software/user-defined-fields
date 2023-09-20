@@ -8,12 +8,12 @@ module UserDefinedFields
         @resolve_defineable
       end
 
-      def search_fieldable(name, search)
-        where("user_defined->>'#{name}' ILIKE ?", "%#{search}%")
+      def search_fieldable(uuid, search)
+        where("user_defined->>'#{uuid}' ILIKE ?", "%#{search}%")
       end
 
-      def where_fieldable(name, value)
-        where("user_defined->>'#{name}' = ?", value)
+      def where_fieldable(uuid, value)
+        where("user_defined->>'#{uuid}' = ?", value)
       end
     end
 
@@ -44,7 +44,7 @@ module UserDefinedFields
           next unless field.required?
 
           # Parse the user defined field and extract the value
-          value = self.user_defined[field.column_name] if self.user_defined.present?
+          value = self.user_defined[field.uuid] if self.user_defined.present?
 
           # Add an error if the value is "empty"
           next unless value.nil? ||
@@ -53,7 +53,7 @@ module UserDefinedFields
             (value.is_a?(Hash) && value.empty?)
 
           message = I18n.t('errors.common.required', name: field.column_name)
-          self.errors.add(:user_defined, [field.column_name, message])
+          self.errors.add(:user_defined, [field.uuid, message])
         end
       end
     end
