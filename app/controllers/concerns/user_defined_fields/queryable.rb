@@ -20,6 +20,9 @@ module UserDefinedFields
           column_name: sort_by
         )
 
+        # Look up the field by UUID if it could not be found
+        user_defined_field = UserDefinedField.find_by_uuid(sort_by) if user_defined_field.nil?
+
         return query if user_defined_field.nil?
 
         table_alias = table_name(user_defined_field.table_name)
