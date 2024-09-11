@@ -8,7 +8,7 @@ module UserDefinedFields
       query = super
 
       query = filter_defineable(query)
-
+      query = filter_required(query)
       query = filter_table(query)
 
       query
@@ -20,6 +20,12 @@ module UserDefinedFields
       return query unless params[:defineable_id].present? && params[:defineable_type].present?
 
       query.where(defineable_id: params[:defineable_id], defineable_type: params[:defineable_type])
+    end
+
+    def filter_required(query)
+      return query unless params[:required].to_s.to_bool
+
+      query.where(required: true)
     end
 
     def filter_table(query)
