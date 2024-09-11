@@ -13,6 +13,7 @@ module UserDefinedFields
     DATA_TYPES = {
       boolean: 'Boolean',
       date: 'Date',
+      fuzzy_date: 'FuzzyDate',
       number: 'Number',
       richText: 'RichText',
       select: 'Select',
