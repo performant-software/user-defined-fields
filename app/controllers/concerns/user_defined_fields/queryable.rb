@@ -31,6 +31,8 @@ module UserDefinedFields
         case user_defined_field.data_type
         when UserDefinedField::DATA_TYPES[:date]
           query.order(Arel.sql("(#{table_alias}.user_defined->>'#{uuid}')::TIMESTAMPTZ #{sort_direction}"))
+        when UserDefinedField::DATA_TYPES[:fuzzy_date]
+          query.order(Arel.sql("(#{table_alias}.user_defined->'#{uuid}'->>'start_date')::TIMESTAMPTZ #{sort_direction}"))
         when UserDefinedField::DATA_TYPES[:number]
           query.order(Arel.sql("(#{table_alias}.user_defined->>'#{uuid}')::DECIMAL #{sort_direction}"))
         else
