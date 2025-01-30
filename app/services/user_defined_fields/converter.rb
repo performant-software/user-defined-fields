@@ -4,10 +4,10 @@ module UserDefinedFields
 
     included do
       def convert_value(user_defined_field, value)
-        return nil unless value.present?
+        return nil unless value.present? or value == false
 
         if user_defined_field.data_type == UserDefinedField::DATA_TYPES[:boolean]
-          conert_bool(value)
+          convert_bool(value)
         elsif user_defined_field.data_type == UserDefinedField::DATA_TYPES[:date]
           convert_date(value)
         elsif user_defined_field.data_type == UserDefinedField::DATA_TYPES[:number]
@@ -35,7 +35,7 @@ module UserDefinedFields
         elsif value.in? [true, false]
           value
         else
-          nil
+          false
         end
       end
 
