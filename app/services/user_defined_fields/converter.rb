@@ -4,10 +4,10 @@ module UserDefinedFields
 
     included do
       def convert_value(user_defined_field, value)
-        return nil unless value.present?
+        return nil unless value.present? or value == false
 
         if user_defined_field.data_type == UserDefinedField::DATA_TYPES[:boolean]
-          value.to_bool
+          convert_bool(value)
         elsif user_defined_field.data_type == UserDefinedField::DATA_TYPES[:date]
           convert_date(value)
         elsif user_defined_field.data_type == UserDefinedField::DATA_TYPES[:number]
@@ -26,6 +26,16 @@ module UserDefinedFields
           JSON.parse(value)
         rescue StandardError
           nil
+        end
+      end
+
+      def convert_bool(value)
+        if value.is_a? String
+          value.to_bool
+        elsif value.in? [true, false]
+          value
+        else
+          false
         end
       end
 
