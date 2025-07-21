@@ -1,17 +1,18 @@
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: 54b103f2f1f3455bf7d86f606c90d889e46112e8
-  tag: v0.4.3
+  revision: ab5afbdfedfd4e89309d748b46167652562a22bf
+  tag: v0.5.14
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
-      rails (>= 6.0.3.2, < 8)
+      pundit (~> 2.3.1)
+      rails (>= 7.0, < 9)
 
 PATH
   remote: .
   specs:
     user_defined_fields (0.1.0)
-      rails (>= 6.0.3.2, < 8)
+      rails (>= 6.0.3.2, < 9)
       resource_api
 
 GEM
@@ -121,6 +122,8 @@ GEM
       racc (~> 1.4)
     pagy (5.10.1)
       activesupport
+    pundit (2.3.2)
+      activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.4)
     rack-test (2.0.2)
