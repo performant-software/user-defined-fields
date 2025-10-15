@@ -22,10 +22,14 @@ module UserDefinedFields
       private
 
       def convert_array(value)
-        begin
-          JSON.parse(value)
-        rescue StandardError
-          nil
+        if value.is_a? Array
+          value
+        else
+          begin
+            JSON.parse(value)
+          rescue StandardError
+            nil
+          end
         end
       end
 
