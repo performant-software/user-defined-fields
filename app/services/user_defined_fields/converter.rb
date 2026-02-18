@@ -12,22 +12,12 @@ module UserDefinedFields
           convert_date(value)
         elsif user_defined_field.data_type == UserDefinedField::DATA_TYPES[:number]
           value.to_i
-        elsif user_defined_field.data_type == UserDefinedField::DATA_TYPES[:select] && user_defined_field.allow_multiple
-          convert_array(value)
         else
           value
         end
       end
 
       private
-
-      def convert_array(value)
-        begin
-          JSON.parse(value)
-        rescue StandardError
-          nil
-        end
-      end
 
       def convert_bool(value)
         if value.is_a? String
