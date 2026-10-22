@@ -4,7 +4,7 @@ module UserDefinedFields
 
     included do
       # Relationships
-      has_many :user_defined_fields, as: :defineable, dependent: :destroy, class_name: 'UserDefinedFields::UserDefinedField'
+      has_many :user_defined_fields, -> { order(:order, :column_name, :id) }, as: :defineable, dependent: :destroy, class_name: 'UserDefinedFields::UserDefinedField'
 
       # Nested attributes
       accepts_nested_attributes_for :user_defined_fields, allow_destroy: true
